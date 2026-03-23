@@ -1,0 +1,30 @@
+name: AdnanIOSWrapperV1
+options:
+  deploymentTarget:
+    iOS: "16.0"
+  bundleIdPrefix: com.adnan
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: 5.9
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  AdnanIOSWrapperV1:
+    type: application
+    platform: iOS
+    sources:
+      - path: App
+      - path: Modules
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.adnan.wrapper.v1
+        INFOPLIST_FILE: Config/Info.plist
+        CURRENT_PROJECT_VERSION: 1
+        MARKETING_VERSION: 0.1.0
+    info:
+      path: Config/Info.plist
+      properties:
+        UILaunchScreen: {}
