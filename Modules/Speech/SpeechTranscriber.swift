@@ -40,7 +40,17 @@ final class SpeechTranscriber: ObservableObject {
     utteranceId = UUID().uuidString
 
     let localeId = locale.identifier
-    recognizer = SFSpeechRecognizer(locale: Locale(identifier: localeId))
+    guard let createdRecognizer = SFSpeechRecognizer(locale: Locale(identifier: localeId)) else {
+      lastError = "Speech recognizer unavailable for locale."
+      cleanup()
+      return
+    }
+    if !createdRecognizer.isAvailable {
+      lastError = "Speech recognizer is currently unavailable."
+      cleanup()
+      return
+    }
+    recognizer = createdRecognizer
 
     let req = SFSpeechAudioBufferRecognitionRequest()
     req.shouldReportPartialResults = true

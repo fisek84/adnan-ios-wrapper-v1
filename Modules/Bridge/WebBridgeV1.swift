@@ -1,6 +1,10 @@
 import Foundation
 import WebKit
 
+extension Notification.Name {
+  static let adnanBridgeEvent = Notification.Name("adnanBridgeEvent")
+}
+
 final class WebBridgeV1: NSObject {
   private weak var webView: WKWebView?
 
@@ -110,7 +114,18 @@ final class WebBridgeV1: NSObject {
 extension WebBridgeV1: WKScriptMessageHandler {
   func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     if message.name == "adnanBridge" {
-      _ = message.body
+      if let dict = message.body as? [String: Any] {
+        let type = dict["type"] as? String
+        if type == "media_play_rejected" || type == "media_play_throw" {
+          let name = dict["name"] as? String
+          let msg = dict["message"] as? String
+          print("[AdnanBridge] \(type ?? "event"): \(name ?? "") \(msg ?? "")")
+          NotificationCenter.default.post(name: .adnanBridgeEvent, object: nil, userInfo: dict)
+          return
+        }
+      }
+
+      print("[AdnanBridge] message: \(message.body)")
     }
   }
 }

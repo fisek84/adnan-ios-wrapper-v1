@@ -3,7 +3,7 @@ import Foundation
 enum AppConfig {
   /// Render-hosted frontend base URL.
   /// Must be HTTPS.
-  static let renderBaseURL = URL(string: "https://YOUR-RENDER-FRONTEND.example.com")!
+  static let renderBaseURL = URL(string: "https://adnan-backend-v4.onrender.com")!
 
   /// Allowlist the domains your WKWebView is permitted to navigate to.
   /// Keep this strict for production.
